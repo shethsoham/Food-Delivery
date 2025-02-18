@@ -7,15 +7,13 @@ import UserContext from "../utils/UserContext";
 
 const Body = () => {
   // Local State Variable - Super powerful variable
-  const [listOfRestaurants, setListOfRestraunt] = useState([]);
-  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-
+  const [listOfRestaurants, setListOfRestaurants] = useState([]); // Ensure default value is an empty array
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]); // Ensure default value is an empty array
   const [searchText, setSearchText] = useState("");
 
   const RestaurantCardPromoted = withPromtedLabel(RestaurantCard);
 
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -27,13 +25,12 @@ const Body = () => {
 
     const json = await data.json();
 
-    // Optional Chaining
-    setListOfRestraunt(
-      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurant(
-      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+    // Optional Chaining - Always ensure there's a fallback for undefined
+    const restaurants =
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+
+    setListOfRestaurants(restaurants);
+    setFilteredRestaurant(restaurants);
   };
 
   const onlineStatus = useOnlineStatus();
@@ -55,6 +52,7 @@ const Body = () => {
         <div className="search m-4 p-4">
           <input
             type="text"
+            data-testid="searchInput"
             className="border border-solid border-black"
             value={searchText}
             onChange={(e) => {
@@ -64,12 +62,11 @@ const Body = () => {
           <button
             className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
-              // Filter the restraunt cards and update the UI
-              // searchText
+              // Filter the restaurant cards and update the UI
               console.log(searchText);
 
               const filteredRestaurant = listOfRestaurants.filter((res) =>
-                res.data.name.toLowerCase().includes(searchText.toLowerCase())
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
 
               setFilteredRestaurant(filteredRestaurant);
@@ -83,9 +80,9 @@ const Body = () => {
             className="px-4 py-2 bg-gray-100 rounded-lg"
             onClick={() => {
               const filteredList = listOfRestaurants.filter(
-                (res) => res.data.avgRating > 4
+                (res) => res.info.avgRating > 4
               );
-              setListOfRestraunt(filteredList);
+              setFilteredRestaurant(filteredList);
             }}
           >
             Top Rated Restaurants
