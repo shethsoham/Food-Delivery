@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-//import UserContext from "../utils/UserContext";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   // Local State Variable - Super powerful variable
