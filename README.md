@@ -1,4 +1,5 @@
-# Food Delivery React 🚀
+# Namaste React 🚀
+
 
 # Parcel
 - Dev Build
@@ -22,6 +23,7 @@
 
 
 # Namaste Food
+
 
 /**
  * Header
@@ -62,4 +64,8 @@ import {Component} from "path";
 - useState() - Superpowerful State Variables in react
 - useEffect()
 
- 
+
+
+#  2 types Routing in web apps
+ - Client Side Routing
+ - Server Side Routing
